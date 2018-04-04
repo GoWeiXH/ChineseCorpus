@@ -1,9 +1,8 @@
-import toolBox as tb
+import toolBox as Box
 
 
 def test01():
-    result = tb.match_string("a", "b")
+    result = Box.match_string("a", "b")
     print(result)
 
 
-test01()
