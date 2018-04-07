@@ -1,7 +1,7 @@
 # AnalystTaoBao
 
 * __Author__ : Jacky Wei
-* __Version__  ：0.0.1.20180407_Base
+* __Version__  ：0.0.1.20180408_Base
 
 
 ## __目录：__ <a id="目录"></a>
