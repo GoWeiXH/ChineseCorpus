@@ -12,3 +12,4 @@ class ToolBox:
         :return: 一致则返回True，不一致则返回False（bool）
         """
         return a_str == b_str
+
