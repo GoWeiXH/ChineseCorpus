@@ -88,7 +88,7 @@ __2. 项目包含两个部分的工作：__
 
 ## 3.爬虫设计 <a id= "爬虫设计"></a>
 __1. 爬取代理IP__
-    - 相关描述见 <a href="https://github.com/JackWeixh/IPsReaper">IPsReaper</a>
+    - 相关描述见 <a href="https://github.com/JackWeixh/IPsReaper" target="blank">IPsReaper</a>
     
 __2. 利用代理IP爬取淘宝商品信息__
 
