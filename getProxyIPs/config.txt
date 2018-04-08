@@ -1,0 +1,5 @@
+proxy = False
+connect_timeout = 3
+read_timeout = 6
+frequency = 6
+test_domain = https://www.taobao.com/
