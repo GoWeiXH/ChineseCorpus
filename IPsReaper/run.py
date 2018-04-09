@@ -1,4 +1,4 @@
-from getProxyIPs.reaper import IPReaper
+from IPsReaper.reaper import IPReaper
 
 rp = IPReaper(proxy=None)
 rp.run_reaper()

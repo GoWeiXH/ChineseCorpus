@@ -8,8 +8,8 @@ import urllib3
 import certifi
 import gevent
 
-from getProxyIPs.reaperError import *
-from getProxyIPs.tools import Tools as toolBox
+from IPsReaper.reaperError import *
+from IPsReaper.tools import Tools as toolBox
 
 
 class IPReaper:
