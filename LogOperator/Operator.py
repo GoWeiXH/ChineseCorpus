@@ -25,7 +25,7 @@ class Operator:
     def output(self, log):
         """
         按照等级规则对日志内容进行输出
-        DEBUG 只在控制台打印
+        DEBUG 等级只在控制台打印
         :param log: 日志对象 log
         """
         if log.level not in ["DEBUG"]:
