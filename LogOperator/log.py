@@ -18,12 +18,9 @@ class Log:
         self.content = content
 
         # 等级控制
-        level_list = {"DEBUG": 1,
-                      "INFO": 2,
-                      "WARN": 3,
-                      "ERROR": 4}
+        level_list = {"DEBUG", "INFO", "WARN", "ERROR"}
         self.level = str.upper(level)
-        if self.level not in level_list.keys():
+        if self.level not in level_list:
             raise LevelException(level)
 
     def __format__(self, content):
