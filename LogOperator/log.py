@@ -1,15 +1,12 @@
 from LogOperator.logException import *
 import time
+import os
 
 
 class Log:
 
     """
     日志类
-    属性：等级
-          内容
-    方法：to_console()
-          to_file()
     """
 
     def __init__(self, level, content):
@@ -18,33 +15,35 @@ class Log:
         self.content = content
 
         # 等级控制
-        level_list = {"DEBUG", "INFO", "WARN", "ERROR"}
-        self.level = str.upper(level)
-        if self.level not in level_list:
+        level_list = ("DEBUG", "INFO", "WARN", "ERROR")
+        level = str.upper(level)
+        if level not in level_list:
             raise LevelException(level)
+        self.level = level
 
-    def __format__(self, content):
+    def __format(self, content):
         """
         将要显示信息格式化。
         :param content: 内容 str
         :return: 格式化后的内容 str
         """
-        msg = "{0} - {1}: {2}".format(self.level, time.ctime(), content['msg'])
+        msg = "{0} - {1}: {2}".format(self.level, time.ctime(), content)
         return msg
 
     def to_console(self):
         """
         将单行日志打印在控制台。
         """
-        content = self.__format__(self.content)
+        content = self.__format(self.content)
         print(content)
 
-    def to_file(self, filename):
+    def to_file(self, log_path, filename):
         """
         将单行日志写入日志文件。
         """
-        content = self.__format__(self.content) + "\n"
-        filename = filename + ".log"
-        with open(filename, "a") as f:
+        content = self.__format(self.content) + "\n"
+        if not os.path.exists(log_path):
+            os.mkdir(log_path)
+        file_path = log_path + filename + ".log"
+        with open(file_path, "a") as f:
             f.write(content)
-

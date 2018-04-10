@@ -1,4 +1,5 @@
 from DBOperator import csvOperator
+from LogOperator.Operator import Operator
 from LogOperator.log import Log
 import toolBox
 import random
@@ -7,11 +8,10 @@ import sys
 
 
 def run05():
-    logger = Log("info", "test_log")
-    logger.to_file({"msg": "testing1"})
-    logger.to_file({"msg": "testing2"})
-    logger.to_console({"msg": "testing1"})
-    logger.to_console({"msg": "testing2"})
+    log = Log("info", "test_content")
+    op = Operator()
+    # op.modify()
+    op.output(log)
 
 
 def run04():
