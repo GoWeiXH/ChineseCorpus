@@ -23,7 +23,7 @@ class Log:
 
     def __format(self, content):
         """
-        将要显示信息格式化。
+        将要显示的信息格式化。
         :param content: 内容 str
         :return: 格式化后的内容 str
         """
@@ -42,8 +42,6 @@ class Log:
         将单行日志写入日志文件。
         """
         content = self.__format(self.content) + "\n"
-        if not os.path.exists(log_path):
-            os.mkdir(log_path)
         file_path = log_path + filename + ".log"
         with open(file_path, "a") as f:
             f.write(content)

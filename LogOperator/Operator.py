@@ -11,6 +11,9 @@ class Operator:
     def __init__(self):
         self.logName = self.__format(datetime.date.today())
         self.logPath = os.getcwd() + "\logs\\"
+        # 判断日志目录是否存在，不存在则创建
+        if not os.path.exists(self.logPath):
+            os.mkdir(self.logPath)
 
     @classmethod
     def __format(cls, date):
