@@ -1,19 +1,28 @@
-from toolBox import toolBox
-from DBOperator import csvDB
+from DBOperator import csvOperator
+from LogOperator.log import Log
+import toolBox
 import random
 import csv
 import sys
 
 
+def run05():
+    logger = Log("info", "test_log")
+    logger.to_file({"msg": "testing1"})
+    logger.to_file({"msg": "testing2"})
+    logger.to_console({"msg": "testing1"})
+    logger.to_console({"msg": "testing2"})
+
+
 def run04():
-    db = csvDB.CSVOperator("CSVdatabase")
+    db = csvOperator.CSVOperator("CSVDatabase")
     db.read_data("test")
 
 
 def run03():
-    db = csvDB.CSVOperator("CSVdatabase")
+    db = csvOperator.CSVOperator("CSVDatabase")
     d = (("b", "b1") for _ in range(10))
-    db.append_data("test_", d)
+    db.save_data("test_", d)
 
 
 def run02():
@@ -37,3 +46,5 @@ def run00():
     result = toolBox.match_string("a", "b")
     return result
 
+
+run05()
