@@ -34,7 +34,7 @@ class Operator:
 
     def modify(self):
         """
-        修改日志文件名称，将前一日的文件名修改为完成状态
+        修改日志文件名称，将前一日的日志修改为完成状态
         """
         today = datetime.date.today()
         yesterday = today - datetime.timedelta(days=1)
