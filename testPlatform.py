@@ -1,5 +1,5 @@
 from DBOperator import csvOperator
-from LogOperator.Operator import Operator
+from LogOperator.operator import Operator
 from LogOperator.log import Log
 import toolBox
 import random

@@ -1,4 +1,4 @@
-from DBOperator.DBException import *
+from DBOperator.dbException import *
 from collections import Iterator
 import csv
 import os
