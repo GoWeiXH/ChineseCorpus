@@ -8,7 +8,7 @@ import sys
 
 
 def run05():
-    log = Log("info", "test_content")
+    log = Log("info", ["test_content", "others"])
     op = Operator()
     # op.modify()
     op.output(log)

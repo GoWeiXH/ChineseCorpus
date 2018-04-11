@@ -1,6 +1,5 @@
 from LogOperator.logException import *
 import time
-import os
 
 
 class Log:
@@ -24,11 +23,12 @@ class Log:
     def __format(self, content):
         """
         将要显示的信息格式化。
-        :param content: 内容 str
+        :param content: 内容 str/list
         :return: 格式化后的内容 str
         """
-        msg = "{0} - {1}: {2}".format(self.level, time.ctime(), content)
-        return msg
+        content = ". ".join([item for item in content])
+        msg = "{level} - {datetime}: {content}"
+        return msg.format(level=self.level, datetime=time.ctime(), content=content)
 
     def to_console(self):
         """
