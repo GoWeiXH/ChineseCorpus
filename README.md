@@ -106,6 +106,7 @@ __2. 项目包含两个部分的工作：__
 - LogOperator
     - log: 日志类，包含等级、内容等属性
     - Operator: 对日志进行操作的类，包括输出、修改等方法
+    
 - 使用方法
 <pre><code>
 log = Log("info", "test_content") # 日志等级包括 DEBUG, INFO, WARN, ERROR
