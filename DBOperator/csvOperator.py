@@ -1,5 +1,4 @@
 from DBOperator.dbException import *
-from collections import Iterator
 import csv
 import os
 
@@ -30,7 +29,7 @@ class CSVOperator:
         self.databaseName = "\\" + database_name
         # 判断数据库文件夹是否存在
         # 如果不存在则创建
-        _base_path = os.getcwd() + "\\database"
+        _base_path = "D:" + "\\database"
         self.databasePath = _base_path + self.databaseName + "\\"
         result = os.path.exists(self.databasePath)
         if not result:
@@ -45,7 +44,7 @@ class CSVOperator:
         complete_path = self.databasePath + filename + ".csv"
         with open(complete_path, "a", newline="") as f:
             # 判断data是否为可迭代对象，否则抛出异常
-            if not isinstance(data, Iterator):
+            if not isinstance(data, list):
                 raise ClassErrorException("variable data")
             csv_writer = csv.writer(f)
             csv_writer.writerows(data)

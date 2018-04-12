@@ -1,10 +1,16 @@
 from DBOperator import csvOperator
 from LogOperator.operator import Operator
 from LogOperator.log import Log
+from TaoBaoWearer.wearer import Wearer
 import toolBox
 import random
 import csv
 import sys
+
+
+def run06():
+    wearer = Wearer()
+    wearer.category_clothing()
 
 
 def run05():
@@ -47,4 +53,4 @@ def run00():
     return result
 
 
-run05()
+run06()
