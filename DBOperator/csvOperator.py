@@ -35,6 +35,10 @@ class CSVOperator:
         if not result:
             os.makedirs(self.databasePath)
 
+    def roll_back(self, filename):
+        # todo
+        pass
+
     def save_data(self, filename, data, mode="a"):
         """
         存储数据，以.csv文件形式存储。
@@ -42,6 +46,10 @@ class CSVOperator:
         :param data: 可迭代对象
         :param mode: 模式 str，制定数据库写入模式，默认追加
         """
+
+        # todo
+        # 在写入数据库前，先对目标库进行复制备份，以便以后回滚
+
         complete_path = self.databasePath + filename + ".csv"
         with open(complete_path, mode, newline="") as f:
             # 判断data是否为可迭代对象，否则抛出异常

@@ -66,4 +66,4 @@ def run00():
     return result
 
 
-a = run07()
+run06()
