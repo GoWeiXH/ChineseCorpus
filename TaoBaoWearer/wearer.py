@@ -1,7 +1,7 @@
 from DBOperator.csvOperator import CSVOperator
 from bs4 import BeautifulSoup
-import toolBox as Box
 import requests
+import json
 
 
 class Wearer:
@@ -12,28 +12,43 @@ class Wearer:
         return response
 
     def category_clothing(self):
-        # 获取类别的html内容并存储为json文件
+        # 获取类别的html内容
         url = "https://www.taobao.com/markets/nvzhuang/taobaonvzhuang"
-        response = self._get_response(url)
-        bs = BeautifulSoup(response, "html.parser")
+        bs = BeautifulSoup(self._get_response(url), "html.parser")
         selector = "#guid-312344 textarea"
-        ul = bs.select(selector)[0].text.encode()
-        Box.save_file("clothing.json", ul)
+        all_cate = bs.select(selector)[0].text.encode()
 
-        # 加载json格式的类别内容，提取出一级类别、二级类别及相应链接存储到数据库
-        db_op = CSVOperator("clothing_category")
-        json_content = Box.load_json("clothing.json")
-        first_category_list = json_content.get("cat_mian")
+        # 将内容转换为json格式，提取出一级类别、二级类别及相应链接存储到数据库
         data = []
-        for first_cate in first_category_list:
+        first_cate_list = json.loads(all_cate).get("cat_mian")
+        for first_cate in first_cate_list:
             second_list = first_cate.get("cat_data")
-            for second_cate in second_list:
-                item = (first_cate.get("name"), second_cate["cat_name"], second_cate["cat_url"])
-                data.append(item)
+            for item in second_list:
+                data.append((first_cate.get("name"), item.get("cat_name"), item.get("cat_url")))
 
-        db_op.save_data("clothing_category", data)
+        # 存储类别到数据库并返回数据
+        db_op = CSVOperator("category")
+        db_op.save_data("clothing", data)
+        return data
 
-    def cat_jewelry(self):
+    def category_jewelry(self):
+        # 获取类别的html内容
         url = "https://www.taobao.com/market/peishi/zhubao.php"
-        response = self._get_response(url)
-        pass
+        bs = BeautifulSoup(self._get_response(url), "html.parser")
+        first_selector = "#guid-13993729158900 p"
+        second_selector = "#guid-13993729158900 textarea"
+        first_cate_list = bs.select(first_selector)
+        second_cate_list = bs.select(second_selector)
+
+        # 将内容转换为json格式，提取出一级类别、二级类别及相应链接存储到数据库
+        data = []
+        for i, first_cate in enumerate(first_cate_list):
+            first_cate_name = first_cate.text
+            items = json.loads(second_cate_list[i].text).get("custom")
+            for item in items:
+                data.append((first_cate_name, item.get("cat_name"), "https:"+item.get("cat_url")))
+
+        # 存储类别到数据库并返回数据
+        db_op = CSVOperator("category")
+        db_op.save_data("jewelry", data)
+        return data

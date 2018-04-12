@@ -35,14 +35,15 @@ class CSVOperator:
         if not result:
             os.makedirs(self.databasePath)
 
-    def save_data(self, filename, data):
+    def save_data(self, filename, data, mode="a"):
         """
         存储数据，以.csv文件形式存储。
         :param filename: 文件名称，无需.csv后缀
         :param data: 可迭代对象
+        :param mode: 模式 str，制定数据库写入模式，默认追加
         """
         complete_path = self.databasePath + filename + ".csv"
-        with open(complete_path, "a", newline="") as f:
+        with open(complete_path, mode, newline="") as f:
             # 判断data是否为可迭代对象，否则抛出异常
             if not isinstance(data, list):
                 raise ClassErrorException("variable data")

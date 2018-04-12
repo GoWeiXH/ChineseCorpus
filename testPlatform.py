@@ -8,9 +8,22 @@ import csv
 import sys
 
 
+def run08(fun):
+    def wrapper():
+        print("outer method")
+        fun()
+    return wrapper
+
+
+@run08
+def run07():
+    print("inner method")
+
+
 def run06():
     wearer = Wearer()
     wearer.category_clothing()
+    wearer.category_jewelry()
 
 
 def run05():
@@ -53,4 +66,4 @@ def run00():
     return result
 
 
-run06()
+a = run07()
