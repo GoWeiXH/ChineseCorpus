@@ -1,6 +1,6 @@
 from DBOperator.csvOperator import CSVOperator
 from bs4 import BeautifulSoup
-import toolBox as box
+import toolBox as Box
 import requests
 
 
@@ -18,11 +18,11 @@ class Wearer:
         bs = BeautifulSoup(response, "html.parser")
         selector = "#guid-312344 textarea"
         ul = bs.select(selector)[0].text.encode()
-        box.save_file("clothing.json", ul)
+        Box.save_file("clothing.json", ul)
 
         # 加载json格式的类别内容，提取出一级类别、二级类别及相应链接存储到数据库
         db_op = CSVOperator("clothing_category")
-        json_content = box.load_json("clothing.json")
+        json_content = Box.load_json("clothing.json")
         first_category_list = json_content.get("cat_mian")
         data = []
         for first_cate in first_category_list:
