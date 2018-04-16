@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from DBOperator.dbException import *
 import shutil
 import csv
@@ -23,17 +24,12 @@ class CSVOperator:
         return cls._instance
 
     def __init__(self, database_name):
-        self.databaseName = None
-        self.databasePath = None
 
         # 设定数据库名称
-        self.databaseName = "\\" + database_name
-        # 判断数据库文件夹是否存在
-        # 如果不存在则创建
-        _base_path = "D:" + "\\database"
-        self.databasePath = _base_path + self.databaseName + "\\"
-        result = os.path.exists(self.databasePath)
-        if not result:
+        self.databaseName = database_name
+        # 判断数据库文件夹是否存在,如果不存在则创建
+        self.databasePath = "\\".join(["D:", "database", self.databaseName]) + "\\"
+        if not os.path.exists(self.databasePath):
             os.makedirs(self.databasePath)
 
     @staticmethod
@@ -67,7 +63,7 @@ class CSVOperator:
         # 在写入数据库前，先对目标库原始版本进行复制备份，以便以后回滚
         self.backup(complete_path)
 
-        with open(complete_path, mode, newline="") as f:
+        with open(complete_path, mode, newline="", encoding="utf-8") as f:
             # 判断data是否为可迭代对象，否则抛出异常
             if not isinstance(data, list):
                 raise ClassErrorException("variable data")

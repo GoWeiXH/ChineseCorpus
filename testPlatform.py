@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from DBOperator import csvOperator
 from LogOperator.operator import Operator
 from LogOperator.log import Log

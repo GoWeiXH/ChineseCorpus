@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import json
 import os
 
@@ -18,7 +19,7 @@ def save_file(name, data):
     :param name: 文件名称
     :param data: 要存储数据
     """
-    base_path = os.getcwd() + "\\file\\" + name.split(".")[1]
+    base_path = "\\".join([os.getcwd(), "file", name.split(".")[1]])
     if not os.path.exists(base_path):
         os.makedirs(base_path)
     file_path = base_path + "\\" + name
@@ -32,6 +33,6 @@ def load_json(name):
     :param name:
     :return:返回json格式
     """
-    base_path = os.getcwd() + "\\file\\json\\" + name
+    base_path = "\\".join([os.getcwd(), "file", "json", name])
     with open(base_path, "r", encoding="utf-8") as f:
         return json.load(f)

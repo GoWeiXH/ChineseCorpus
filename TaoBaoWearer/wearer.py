@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from DBOperator.csvOperator import CSVOperator
 from bs4 import BeautifulSoup
 import requests

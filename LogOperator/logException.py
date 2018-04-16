@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 class LevelException(Exception):
     def __init__(self, value):
         self.value = value
