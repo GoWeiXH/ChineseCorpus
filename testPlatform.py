@@ -28,9 +28,9 @@ def run06():
 
 def run05():
     log = Log("info", ["test_content", "others"])
-    op = Operator()
+    op = Operator(log)
     # op.modify()
-    op.output(log)
+    op.output()
 
 
 def run04():

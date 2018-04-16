@@ -27,8 +27,7 @@ class Wearer:
                 data.append((first_cate.get("name"), item.get("cat_name"), item.get("cat_url")))
 
         # 存储类别到数据库并返回数据
-        db_op = CSVOperator("category")
-        db_op.save_data("clothing", data)
+        CSVOperator("category").save_data("clothing", data)
         return data
 
     def category_jewelry(self):
@@ -49,6 +48,5 @@ class Wearer:
                 data.append((first_cate_name, item.get("cat_name"), "https:"+item.get("cat_url")))
 
         # 存储类别到数据库并返回数据
-        db_op = CSVOperator("category")
-        db_op.save_data("jewelry", data)
+        CSVOperator("category").save_data("jewelry", data)
         return data

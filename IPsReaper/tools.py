@@ -10,8 +10,8 @@ class Tools:
         将传入的字典对象进行格式化打印
         :param dict_data: 字典数据
         """
-        for key,value in dict_data.items():
-            print("{0}: {1}".format(key,value))
+        for key, value in dict_data.items():
+            print("{0}: {1}".format(key, value))
 
     @staticmethod
     def print_format(str_data):
@@ -25,16 +25,15 @@ class Tools:
     def strip(str_data):
         """
         删除 str中的 ['\n','\r' ,'\t',' ']
-        :param str:旧字符串
+        :param str_data:旧字符串
         :return:删除后的字符串
         """
-        #todo update in re
+        # todo update in re
         if str_data is not None:
             new_str = str_data.replace("\n", "").replace(" ", "").replace("\r", "").replace("\t", "")
             return new_str
         else:
             return None
-
 
     @staticmethod
     def count_ip(abs_path):
@@ -42,5 +41,5 @@ class Tools:
         统计此次任务最终保存的ip数量，并打印
         :param abs_path: 存储 ips_ok.txt 的绝对路径
         """
-        ok_txt = len(open(abs_path+"\\"+"ips_ok.txt","rt").readlines())
+        ok_txt = len(open(abs_path+"\\"+"ips_ok.txt", "rt").readlines())
         print("The number of available ip is {0}".format(ok_txt))

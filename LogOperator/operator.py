@@ -23,8 +23,7 @@ class Operator:
         :param date: 日期 date
         :return: 日期 str
         """
-        date = date.__str__().replace("-", "_")
-        return date
+        return date.__str__().replace("-", "_")
 
     def output(self):
         """
@@ -42,6 +41,8 @@ class Operator:
         """
         today = datetime.date.today()
         yesterday = today - datetime.timedelta(days=1)
+
         last_log_file_path = self.logPath + self.__format(yesterday) + ".log"
         finished_log_file_path = self.logPath + self.__format(yesterday) + "_finished.log"
+
         os.rename(last_log_file_path, finished_log_file_path)

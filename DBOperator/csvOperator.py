@@ -1,4 +1,5 @@
 from DBOperator.dbException import *
+import shutil
 import csv
 import os
 
@@ -35,9 +36,25 @@ class CSVOperator:
         if not result:
             os.makedirs(self.databasePath)
 
-    def roll_back(self, filename):
-        # todo
-        pass
+    @staticmethod
+    def roll_back(backup_path):
+        """
+        回滚数据库。
+        :param backup_path:
+        """
+        original_path = ".".join(backup_path.split(".")[0:-1])
+        os.remove(original_path)
+        os.rename(backup_path, original_path)
+
+    @staticmethod
+    def backup(original_path):
+        """
+        对要修改数据库进行备份。
+        :param original_path:
+        """
+        if os.path.exists(original_path):
+            backup_path = original_path + ".bak"
+            shutil.copy(original_path, backup_path)
 
     def save_data(self, filename, data, mode="a"):
         """
@@ -46,17 +63,15 @@ class CSVOperator:
         :param data: 可迭代对象
         :param mode: 模式 str，制定数据库写入模式，默认追加
         """
-
-        # todo
-        # 在写入数据库前，先对目标库进行复制备份，以便以后回滚
-
         complete_path = self.databasePath + filename + ".csv"
+        # 在写入数据库前，先对目标库原始版本进行复制备份，以便以后回滚
+        self.backup(complete_path)
+
         with open(complete_path, mode, newline="") as f:
             # 判断data是否为可迭代对象，否则抛出异常
             if not isinstance(data, list):
                 raise ClassErrorException("variable data")
-            csv_writer = csv.writer(f)
-            csv_writer.writerows(data)
+            csv.writer(f).writerows(data)
 
     def read_data(self, filename):
         """
@@ -69,5 +84,4 @@ class CSVOperator:
         if not os.path.exists(complete_path):
             raise FileNotFoundError(complete_path)
         with open(complete_path, "r") as f:
-            rows = csv.reader(f)
-            return rows
+            return csv.reader(f)
