@@ -8,6 +8,10 @@ import random
 import csv
 import sys
 
+"""
+测试平台
+"""
+
 
 def run08(fun):
     def wrapper():
