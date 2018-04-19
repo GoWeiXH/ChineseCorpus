@@ -13,6 +13,11 @@ import sys
 """
 
 
+def run09():
+    wearer = Wearer()
+    wearer.test()
+
+
 def run08(fun):
     def wrapper():
         print("outer method")
@@ -71,4 +76,4 @@ def run00():
     return result
 
 
-run06()
+run09()
