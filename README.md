@@ -1,7 +1,7 @@
 # AnalystTaoBao
 
 * __Author__ : Jacky Wei
-* __Version__  ：0.3.8.20180419_Base
+* __Version__  ：0.3.9.20180421_Base
 
 
 ## __目录：__
@@ -32,20 +32,22 @@ __2. 项目包含两个部分的工作：__
     1. 女装：
         - 51个类目
         - 每个类目3000件商品
-        - 每件商品37个属性
+        - 每件商品38个属性
         - 共计153000件商品
-        - 共计5661000个属性值
+        - 共计5814000个属性值
     2. 珠宝：
         - 38个类目
         - 每个类目3000件商品
-        - 每件商品33个属性
+        - 每件商品34个属性
         - 共计114000件商品
-        - 共计3762000个属性值
+        - 共计3876000个属性值
         
-        （以平均每个属性值10个Byte估算，每日数据量大约90MB，10个月总数据量大约27GB）
+        （以平均每个属性值10个Byte估算，每日数据量大约92MB，10个月总数据量大约27GB）
     
     3. 商品可爬取的属性项：
-        - 商品名称
+        - 商品名称描述
+        - 商品辅助描述
+        - 商品ID
         - 价格
         - 淘宝价
         - 月售出量
@@ -106,15 +108,24 @@ __2. 项目包含两个部分的工作：__
 ## 6.系统日志设计 <a id= "系统日志设计"></a>
 - LogOperator
     - log: 日志类，包含等级、内容等属性
-    - Operator: 对日志进行操作的类，包括输出、修改等方法
+    - Operator: 对日志进行操作的类，包括输出、修改日志文件状态等方法
     
 - 使用方法
-<pre><code>
-log = Log("info", "test_content") # 日志等级包括 DEBUG, INFO, WARN, ERROR
-op = Operator()
-op.output(log)
-op.modify()
-</code></pre>
+    - 输出日志 
+        <pre><code>
+        from LogOperator.operator import Operator
+        from LogOperator.log import Log
+        content = "test content"
+        Operator(Log("INFO", [content])).output()
+        op.output(log)
+        </code></pre>
+        
+    - 修改日志为完成状态
+        <pre><code>
+        from LogOperator.operator import Operator
+        op = Operator()
+        op.modify()
+        </code></pre>
 
 ## 7.文件命名规范 <a id= "文件命名规范"></a>
 - 包名首字母大写，驼峰式

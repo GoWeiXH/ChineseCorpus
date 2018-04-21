@@ -13,6 +13,11 @@ import sys
 """
 
 
+def run10():
+    wearer = Wearer()
+    wearer.get_items("https://s.taobao.com/list?cat=16&q=衬衫")
+
+
 def run09():
     wearer = Wearer()
     wearer.test()
@@ -38,9 +43,9 @@ def run06():
 
 def run05():
     log = Log("info", ["test_content", "others"])
-    op = Operator(log)
-    # op.modify()
-    op.output()
+    op = Operator()
+    op.modify()
+    # op.output()
 
 
 def run04():
@@ -76,4 +81,4 @@ def run00():
     return result
 
 
-run09()
+run10()

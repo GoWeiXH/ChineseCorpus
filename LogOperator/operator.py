@@ -9,7 +9,7 @@ class Operator:
     日志操作类
     """
 
-    def __init__(self, log):
+    def __init__(self, log=None):
         self.log = log
         self.logName = self.__format(datetime.date.today())
         self.logPath = "\\".join([os.getcwd(), "logs\\"])

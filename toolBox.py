@@ -23,7 +23,7 @@ def save_file(name, data):
     if not os.path.exists(base_path):
         os.makedirs(base_path)
     file_path = base_path + "\\" + name
-    with open(file_path, "wb") as f:
+    with open(file_path, "w") as f:
         f.write(data)
 
 
