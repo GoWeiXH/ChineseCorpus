@@ -115,14 +115,16 @@ __2. 项目包含两个部分的工作：__
         <pre><code>
         from LogOperator.operator import Operator
         from LogOperator.log import Log
+        
         content = "test content"
-        Operator(Log("INFO", [content])).output()
-        op.output(log)
+        op = Operator(Log("INFO", [content]))
+        op.output()
         </code></pre>
         
     - 修改日志为完成状态
         <pre><code>
         from LogOperator.operator import Operator
+        
         op = Operator()
         op.modify()
         </code></pre>
