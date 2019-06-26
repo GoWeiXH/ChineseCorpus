@@ -12,8 +12,11 @@ import os
 import re
 
 from bs4 import BeautifulSoup
+import jieba
 
 from utils import get_ips
+
+jieba.setLogLevel('INFO')
 
 
 class SogouSpider:
@@ -22,7 +25,7 @@ class SogouSpider:
 
     DATA_PATH = 'corpus/Sogou_QA/'
 
-    VIEWED_FILE = DATA_PATH + 'viewed.json'
+    VIEWED_FILE = 'corpus/viewed/viewed_sogou.json'
 
     DOMAIN = 'https://www.sogou.com'
 
@@ -67,11 +70,21 @@ class SogouSpider:
             viewed = {'viewed': list(self.viewed)}
             json.dump(viewed, f, ensure_ascii=False)
 
+    def get_html_ori(self, url):
+        """
+        不使用代理 ip
+        """
+        req = Request(url, headers=self.HEADERS)
+        response = request.urlopen(req, timeout=3)
+        html = response.read().decode('utf8')  # 读取后数据为 bytes，需用 utf-8 进行解码
+        html = BeautifulSoup(html, 'html.parser')
+        return html
+
     def get_html(self, url):
         """
         访问 url，并转换成 BeautifulSoup 类型
         """
-        time.sleep(1)
+        # time.sleep(0.5)
 
         ps, ips = get_ips()
 
@@ -87,6 +100,7 @@ class SogouSpider:
                 ps.pop(index)
                 ips.pop(index)
                 return get_resp()
+
             return response
 
         resp = get_resp()
@@ -129,7 +143,7 @@ class SogouSpider:
             url = self.extract_skip_url(link)
             html = self.get_html(url)
 
-            # 获取问题相关
+            # 获取问题标题与标签
             section = html.select('.main .section')[0]
             title = re.sub(r'[\?？]+', '', section.select_one('#question_title span').text)
             tag = section.select_one('.tags a').text
@@ -141,6 +155,8 @@ class SogouSpider:
                 content = section.select_one('.replay-section.answer_item .replay-info pre')
             content = content.text
             content = re.sub(r'\s+', '', content)  # 去除空格字符，包括：\r \n \r\n \t 空格
+            content = content.split('。')[0].split('！')[0]
+            content = re.sub(r'["“”]', '', content) + '。'
 
             # 构建成一条答案，并添加至答案结果列表
             answer = {'title': title, 'tag': tag, 'content': content}
@@ -159,7 +175,7 @@ class SogouSpider:
             self.index += 1  # 更新文件名称
         self.all_answer = list()  # 保存之后对缓存列表初始化
 
-    def extend_answer(self, query):
+    def extend_question(self, query):
         """
         根据问题搜索相近问题，做延伸搜索
         """
@@ -171,9 +187,17 @@ class SogouSpider:
         if extend_query_list is not None:
             self.query_list += extend_query_list  # 将相近问题添加至待搜索问题列表
 
+    def extract_question(self, query):
+        words = jieba.lcut_for_search(query)
+        self.query_list += words
+
     def run(self, query):
 
         self.query_list.append(query)   # 初始化搜索问题
+
+        # 对问题进行延伸
+        self.extend_question(query)
+        # self.extract_question(query)
 
         for epoch in range(self.num_query):
 
@@ -186,17 +210,28 @@ class SogouSpider:
                 answers = sgs.collect_answers(query)
                 sgs.extract_answer(answers)
 
-            # 如果待搜索问题数量不足，则对问题进行延伸
-            if len(self.query_list) <= 5:
-                self.extend_answer(query)
-
             # 当已搜索问题达到一定数量，则保存
-            if len(self.all_answer) >= 20:
+            if len(self.all_answer) >= 1000:
                 self.save_corpus()
 
         self.save_viewed()  # 当一次任务结束后，保存已搜索问题
 
 
-init = '如何跑得快'
-sgs = SogouSpider(4)
-sgs.run(init)
+def load_question():
+    with open('question_to_learn.txt', 'r', encoding='utf-8') as f:
+        questions = list()
+        for line in f.readlines():
+            questions.append(line.strip())
+        return questions
+
+
+init = '天气'
+# sgs = SogouSpider(10000)
+sgs = SogouSpider(10)
+try:
+    for que in load_question():
+        sgs.run(que)
+except Exception as e:
+    print(e)
+    sgs.save_viewed()
+    sgs.save_corpus()
